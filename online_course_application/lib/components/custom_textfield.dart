@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final TextEditingController? controller;
   final Color borderColor;
+  final Color inputTextColor; // New parameter for input text color
 
   const CustomTextField({
     Key? key,
@@ -16,6 +17,7 @@ class CustomTextField extends StatelessWidget {
     this.obscureText = false,
     this.controller,
     this.borderColor = Colors.grey,
+    this.inputTextColor = Colors.white, // Default input text color
   }) : super(key: key);
 
   @override
@@ -26,6 +28,7 @@ class CustomTextField extends StatelessWidget {
       child: TextField(
         controller: controller,
         obscureText: obscureText,
+        style: TextStyle(color: inputTextColor), // Set input text color here
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: hintStyle ?? const TextStyle(color: Colors.white),
@@ -45,7 +48,6 @@ class CustomTextField extends StatelessWidget {
           const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
           suffixIcon: suffixIcon,
         ),
-        style: const TextStyle(color: Colors.white),
       ),
     );
   }

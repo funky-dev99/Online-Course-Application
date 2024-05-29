@@ -12,7 +12,7 @@ class LoadingDialog extends StatelessWidget {
       ),
       backgroundColor: Colors.black87,
       child: Container(
-        margin: EdgeInsets.all(15),
+        margin: const EdgeInsets.all(15),
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.black87,
@@ -24,16 +24,16 @@ class LoadingDialog extends StatelessWidget {
           child: Row(
             children: [
 
-              SizedBox(width: 5,),
+              const SizedBox(width: 5,),
 
-              CircularProgressIndicator(
+              const CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ),
 
-              SizedBox(width: 8,),
+              const SizedBox(width: 8,),
 
               Text(messageText,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.white,
                 ),

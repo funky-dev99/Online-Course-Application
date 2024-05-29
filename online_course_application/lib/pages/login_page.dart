@@ -8,6 +8,9 @@ import 'package:online_course_application/pages/courses_page.dart';
 
 import '../methods/commonMethods.dart';
 
+///Email: shahiru@gmail.com
+///PW: shahi123
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
