@@ -1,15 +1,75 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:online_course_application/colors.dart';
 import 'package:online_course_application/components/custom_button.dart';
-import 'package:online_course_application/components/custom_textfield.dart'; // Adjust this import to match the location of your colors.dart file
+import 'package:online_course_application/components/custom_textfield.dart';
+import 'package:online_course_application/components/loading.dart';
+import 'package:online_course_application/pages/courses_page.dart';
 
-class LoginPage extends StatelessWidget {
+import '../methods/commonMethods.dart';
+
+
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final emailOrPhoneController = TextEditingController();
+  final passwordController = TextEditingController();
+  CommonMethods cMethods = CommonMethods();
+
+  checkIfNetworkIsAvailable() async {
+    await cMethods.checkConnectivity(context);
+    signInFormValidation();
+  }
+
+  signInFormValidation() {
+    if (!emailOrPhoneController.text.contains('@')) {
+      snackBar(context, 'Please enter a valid email', Colors.redAccent);
+    } else if (passwordController.text.trim().length < 6) {
+      snackBar(context, 'Your password must be 6 or more characters', Colors.redAccent);
+    } else {
+      signInUser();
+    }
+  }
+
+  signInUser() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => LoadingDialog(messageText: 'Allowing you to login...'),
+    );
+
+    try {
+      final User? userFirebase = (await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailOrPhoneController.text.trim(),
+        password: passwordController.text.trim(),
+      )).user;
+
+      if (!context.mounted) return;
+      Navigator.pop(context);
+
+      if (userFirebase != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => CoursesPage()),
+        );
+      } else {
+        snackBar(context, 'Login failed. Please try again.', Colors.red);
+      }
+    } catch (error) {
+      Navigator.pop(context);
+      snackBar(context, 'Incorrect email or password!', Colors.red);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.appRichBlack, // Dark background color
+      backgroundColor: AppColor.appRichBlack,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -49,16 +109,18 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              const CustomTextField(
+              CustomTextField(
+                controller: emailOrPhoneController,
                 hintText: 'Email address',
-                hintStyle: TextStyle(fontSize: 16, color: Colors.white),
+                hintStyle: const TextStyle(fontSize: 16, color: Colors.white),
               ),
               const SizedBox(height: 20),
-               CustomTextField(
+              CustomTextField(
+                controller: passwordController,
                 hintText: 'Password',
-                hintStyle: TextStyle(fontSize: 16, color: Colors.white),
+                hintStyle: const TextStyle(fontSize: 16, color: Colors.white),
                 suffixIcon: IconButton(
-                  onPressed: (){},
+                  onPressed: () {},
                   icon: Image.asset(
                     'images/eye.png',
                     width: 20,
@@ -82,12 +144,10 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 180),
-
               CustomButton(
-                onPressed: () {},
+                onPressed: () => checkIfNetworkIsAvailable(),
                 childText: 'Sign in',
               ),
-
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),
                 child: Row(

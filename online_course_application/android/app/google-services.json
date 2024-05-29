@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "465131815765",
+    "project_id": "online-ourse-application",
+    "storage_bucket": "online-ourse-application.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465131815765:android:1283d90fa31e70618ee5dc",
+        "android_client_info": {
+          "package_name": "com.example.online_course_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMNk1BP4a8mrA_np8GMkZCWRY7NKQyCU0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
