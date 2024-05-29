@@ -13,8 +13,8 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 328, // Fixed width
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 30),
       height: 53, // Fixed height
       child: ElevatedButton(
         onPressed: onPressed,
